@@ -41,7 +41,7 @@ ENV/
 # Project Specific
 CustomModel/data/
 CustomModel/dummy_data/
-CustomModel/model.pth
+!CustomModel/model.pth
 
 # OS
 .DS_Store
