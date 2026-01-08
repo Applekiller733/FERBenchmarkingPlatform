@@ -1,18 +1,19 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, APIRouter
 from transformers import pipeline
 from PIL import Image
 import io
 import asyncio
 
-app = FastAPI(title="ViT Emotion Recognition API")
+router = APIRouter()
 
+# Initialize the pipeline
 classifier = pipeline("image-classification", model="dima806/facial_emotions_image_detection")
 
 
-@app.post("/predict")
+@router.post("/predict_pretrained", tags=["Pretrained Model"])
 async def predict_emotions(images: list[UploadFile] = File(...)):
     """
-    Endpoint to receive a list of images and return predictions for each.
+    Endpoint to receive a list of images and return predictions for each using the Pretrained ViT model.
     """
     if not images:
         raise HTTPException(status_code=400, detail="No images provided")
@@ -63,6 +64,11 @@ async def predict_emotions(images: list[UploadFile] = File(...)):
         "count": len(final_results),
         "results": final_results
     }
+
+
+# Create the app only if running standalone or for testing imports that expect 'app'
+app = FastAPI(title="ViT Emotion Recognition API")
+app.include_router(router)
 
 
 if __name__ == "__main__":
