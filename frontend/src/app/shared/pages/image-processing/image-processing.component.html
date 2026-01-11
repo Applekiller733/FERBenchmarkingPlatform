@@ -26,7 +26,31 @@
         <div class="model-section pretrained">
             <h2>Pretrained Model</h2>
             <div class="results-area">
-                <p class="placeholder">Results will appear here...</p>
+                @if (isLoading) {
+                <p class="loading">Analyzing...</p>
+                } @else if (pretrainedResult) {
+                <div class="result-content">
+                    <h3 class="top-emotion">{{ pretrainedResult.top_emotion | titlecase }}</h3>
+                    <p class="confidence">Confidence: {{ (pretrainedResult.confidence * 100) | number:'1.2-2' }}%</p>
+
+                    <div class="distribution">
+                        <h4>Probability Distribution</h4>
+                        <ul>
+                            @for (item of pretrainedResult.full_analysis | keyvalue; track item.key) {
+                            <li>
+                                <span class="label">{{ item.key | titlecase }}</span>
+                                <div class="progress-track">
+                                    <div class="progress-fill" [style.width.%]="item.value * 100"></div>
+                                </div>
+                                <span class="value">{{ (item.value * 100) | number:'1.1-1' }}%</span>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                } @else {
+                <p class="placeholder">Results will appear here</p>
+                }
             </div>
         </div>
 
@@ -34,7 +58,31 @@
         <div class="model-section custom">
             <h2>Custom Model</h2>
             <div class="results-area">
-                <p class="placeholder">Results will appear here...</p>
+                @if (isLoading) {
+                <p class="loading">Analyzing...</p>
+                } @else if (customResult) {
+                <div class="result-content">
+                    <h3 class="top-emotion">{{ customResult.top_emotion | titlecase }}</h3>
+                    <p class="confidence">Confidence: {{ (customResult.confidence * 100) | number:'1.2-2' }}%</p>
+
+                    <div class="distribution">
+                        <h4>Probability Distribution</h4>
+                        <ul>
+                            @for (item of customResult.predictions | keyvalue; track item.key) {
+                            <li>
+                                <span class="label">{{ item.key | titlecase }}</span>
+                                <div class="progress-track">
+                                    <div class="progress-fill" [style.width.%]="item.value * 100"></div>
+                                </div>
+                                <span class="value">{{ (item.value * 100) | number:'1.1-1' }}%</span>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                } @else {
+                <p class="placeholder">Results will appear here</p>
+                }
             </div>
         </div>
     </div>

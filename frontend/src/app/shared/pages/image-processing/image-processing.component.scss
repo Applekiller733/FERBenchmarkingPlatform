@@ -105,15 +105,158 @@
             background: white;
             border-radius: 8px;
             padding: 1rem;
-            height: 300px;
+            height: auto;
+            min-height: 300px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             border: 1px dashed #ccc;
 
-            .placeholder {
-                color: #999;
+            .placeholder,
+            .loading {
+                color: #666;
+                font-size: 1.2rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                &::after {
+                    content: '...';
+                    animation: ellipsis 1.5s infinite;
+                }
+            }
+
+            .result-content {
+                width: 100%;
+                text-align: center;
+                animation: fadeIn 0.5s ease-out;
+
+                .top-emotion {
+                    font-size: 2.5rem;
+                    color: #222;
+                    margin-bottom: 0.25rem;
+                    font-weight: 800;
+                    letter-spacing: -0.5px;
+                }
+
+                .confidence {
+                    font-size: 1.1rem;
+                    margin-bottom: 2rem;
+                    font-weight: 600;
+                    display: inline-block;
+                    padding: 0.25rem 1rem;
+                    border-radius: 20px;
+                    background: rgba(0, 0, 0, 0.05);
+                }
+
+                .distribution {
+                    text-align: left;
+                    background: #fff;
+                    padding: 1.5rem;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                    border: 1px solid #eee;
+
+                    h4 {
+                        margin-bottom: 1rem;
+                        font-size: 0.9rem;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        color: #888;
+                        border-bottom: 1px solid #f0f0f0;
+                        padding-bottom: 0.5rem;
+                    }
+
+                    ul {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+
+                        li {
+                            display: grid;
+                            grid-template-columns: 80px 1fr 50px;
+                            align-items: center;
+                            gap: 1rem;
+                            padding: 0.5rem 0;
+                            font-size: 0.95rem;
+                            color: #555;
+
+                            .label {
+                                font-weight: 600;
+                            }
+
+                            .progress-track {
+                                height: 8px;
+                                background: #eee;
+                                border-radius: 4px;
+                                overflow: hidden;
+
+                                .progress-fill {
+                                    height: 100%;
+                                    background: #ccc; // Default
+                                    border-radius: 4px;
+                                    transition: width 0.5s ease-out;
+                                }
+                            }
+
+                            .value {
+                                text-align: right;
+                                font-variant-numeric: tabular-nums;
+                            }
+                        }
+                    }
+                }
             }
         }
+
+        // Specific colors for models
+        &.pretrained {
+            .confidence {
+                color: #007bff;
+                background: rgba(0, 123, 255, 0.1);
+            }
+
+            .progress-fill {
+                background: #007bff !important;
+            }
+        }
+
+        &.custom {
+            .confidence {
+                color: #28a745;
+                background: rgba(40, 167, 69, 0.1);
+            }
+
+            .progress-fill {
+                background: #28a745 !important;
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes ellipsis {
+    0% {
+        content: '.';
+    }
+
+    33% {
+        content: '..';
+    }
+
+    66% {
+        content: '...';
     }
 }
