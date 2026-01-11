@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="controls-section">
+        <h1>Facial Emotion Recognition</h1>
+
+        <div class="controls">
+            <input type="file" #fileInput (change)="onFileSelected($event)" accept=".jpg,.jpeg,.png"
+                style="display: none">
+            <button class="btn-primary" (click)="fileInput.click()">Upload Image</button>
+
+            <button class="btn-secondary" (click)="runModels()">Run Models</button>
+        </div>
+
+        @if (selectedFileName) {
+        <p class="file-name">Selected: {{ selectedFileName }}</p>
+        }
+
+        @if (previewUrl) {
+        <div class="preview-section">
+            <img [src]="previewUrl" alt="Selected Image Preview" class="preview-image">
+        </div>
+        }
+    </div>
+
+    <div class="split-view">
+        <!-- Left Section: Pretrained Model -->
+        <div class="model-section pretrained">
+            <h2>Pretrained Model</h2>
+            <div class="results-area">
+                <p class="placeholder">Results will appear here...</p>
+            </div>
+        </div>
+
+        <!-- Right Section: Custom Model -->
+        <div class="model-section custom">
+            <h2>Custom Model</h2>
+            <div class="results-area">
+                <p class="placeholder">Results will appear here...</p>
+            </div>
+        </div>
+    </div>
+</div>

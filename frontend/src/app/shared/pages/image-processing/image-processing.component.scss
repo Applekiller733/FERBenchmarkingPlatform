@@ -1,0 +1,119 @@
+.container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.controls-section {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+        color: #333;
+    }
+
+    .controls {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+
+            &:hover {
+                opacity: 0.9;
+                transform: translateY(-1px);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #28a745;
+            color: white;
+        }
+    }
+
+    .file-name {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 1rem;
+    }
+
+    .preview-section {
+        margin-top: 1.5rem;
+
+        .preview-image {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid #fff;
+        }
+    }
+}
+
+.split-view {
+    display: flex;
+    gap: 2rem;
+
+    // Responsive: Stack on smaller screens
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+
+    .model-section {
+        flex: 1;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        min-height: 400px;
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 0.5rem;
+        }
+
+        &.pretrained {
+            border-top: 5px solid #007bff; // Blue accent
+        }
+
+        &.custom {
+            border-top: 5px solid #28a745; // Green accent
+        }
+
+        .results-area {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #ccc;
+
+            .placeholder {
+                color: #999;
+            }
+        }
+    }
+}
