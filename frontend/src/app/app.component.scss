@@ -1,0 +1,63 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    .nav-brand {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #444;
+
+        // Optional: Add a gradient or accent to the brand
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+
+        a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            padding: 0.5rem 0;
+            position: relative;
+
+            &:hover {
+                color: #007bff;
+            }
+
+            &.active {
+                color: #007bff;
+                font-weight: 600;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 2px;
+                    background-color: #007bff;
+                    border-radius: 2px;
+                }
+            }
+        }
+    }
+}
+
+.main-content {
+    min-height: calc(100vh - 74px); // Adjust based on navbar height
+    background-color: #f8f9fa;
+}
