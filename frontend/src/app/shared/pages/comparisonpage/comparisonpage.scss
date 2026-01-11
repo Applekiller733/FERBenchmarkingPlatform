@@ -1,0 +1,128 @@
+$primary-color: #2c3e50;
+$success-color: #27ae60;
+$border-radius: 12px;
+$bg-light: #f8f9fa;
+
+.dashboard-container {
+  padding: 2rem;
+  background-color: $bg-light;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    h1 { color: $primary-color; margin-bottom: 0.5rem; }
+    p { color: #666; }
+  }
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.model-column {
+  background: white;
+  border-radius: $border-radius;
+  padding: 1.5rem;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease;
+
+  &.winner-column {
+    border-color: $success-color;
+    box-shadow: 0 10px 30px rgba(39, 174, 96, 0.1);
+  }
+}
+
+.model-header-card {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+
+  h2 { color: $primary-color; font-size: 1.5rem; }
+
+  .main-score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: $primary-color;
+    }
+
+    .trend-up {
+      color: $success-color;
+      font-size: 1.5rem;
+      animation: bounce 2s infinite;
+    }
+  }
+}
+
+.metrics-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+
+  th {
+    text-align: left;
+    color: #888;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding: 0.5rem;
+  }
+
+  td {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 500;
+  }
+}
+
+.plots-section {
+  margin-top: 2rem;
+
+  h3 { font-size: 1.1rem; color: #444; margin-bottom: 1rem; }
+
+  .plot-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #777;
+      margin-bottom: 0.5rem;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+// Responsive for smaller screens
+@media (max-width: 992px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
