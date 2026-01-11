@@ -39,9 +39,10 @@ ENV/
 .vscode/
 
 # Project Specific
-CustomModel/data/
-CustomModel/dummy_data/
-!CustomModel/model.pth
+custom_model/data/
+custom_model/dummy_data/
+!custom_model/model.pth
+evaluation_scripts/results/
 
 # OS
 .DS_Store

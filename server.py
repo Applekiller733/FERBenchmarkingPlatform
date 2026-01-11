@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
-from CustomModel.api import router as custom_router
-from pretrainedmodel.app import router as pretrained_router
+from custom_model.api import router as custom_router
+from pretrained_model.app import router as pretrained_router
 
 app = FastAPI(title="FER Benchmarking Platform")
 
