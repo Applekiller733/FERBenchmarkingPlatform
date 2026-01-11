@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from custom_model.api import router as custom_router
 from pretrained_model.app import router as pretrained_router
@@ -7,6 +8,15 @@ from stats_api import router as stats_router
 import os
 
 app = FastAPI(title="FER Benchmarking Platform")
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 # Mount custom model router
 app.include_router(custom_router, prefix="/custom", tags=["Custom Model"])
