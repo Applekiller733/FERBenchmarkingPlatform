@@ -1,0 +1,98 @@
+<div class="dashboard-container" *ngIf="customStats && pretrainedStats">
+  <header class="dashboard-header">
+    <h1>Model Performance Comparison</h1>
+    <p>Custom FER Model vs. Pretrained Baseline</p>
+  </header>
+
+  <div class="comparison-grid">
+    <div class="model-column" [class.winner-column]="customStats.overall.accuracy > pretrainedStats.overall.accuracy">
+      <div class="model-header-card">
+        <h2>{{ customStats.model }}</h2>
+        <div class="main-score">
+          <span class="label">Accuracy</span>
+          <span class="value">{{ customStats.overall.accuracy | percent:'1.2-2' }}</span>
+          <span *ngIf="compare(customStats.overall.accuracy, pretrainedStats.overall.accuracy)" class="trend-up">▲</span>
+        </div>
+      </div>
+
+      <section class="stats-section">
+        <h3>Core Metrics</h3>
+        <div class="metrics-table-wrapper">
+          <table class="metrics-table">
+            <thead>
+              <tr>
+                <th>Emotion</th>
+                <th>F1-Score</th>
+                <th>Recall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of customStats.emotions">
+                <td>{{ item.emotion }}</td>
+                <td>{{ item.f1 | number:'1.2-2' }}</td>
+                <td>{{ item.recall | number:'1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="plots-section">
+        <h3>Visualizations</h3>
+        <div class="plot-card">
+          <label>Confusion Matrix</label>
+          <img [src]="getImgUrl(customStats.plots.confusion_matrix)" alt="Confusion Matrix">
+        </div>
+        <div class="plot-card">
+          <label>ROC Curve</label>
+          <img [src]="getImgUrl(customStats.plots.roc_curve)" alt="ROC Curve">
+        </div>
+      </section>
+    </div>
+
+    <div class="model-column" [class.winner-column]="pretrainedStats.overall.accuracy > customStats.overall.accuracy">
+      <div class="model-header-card">
+        <h2>{{ pretrainedStats.model }}</h2>
+        <div class="main-score">
+          <span class="label">Accuracy</span>
+          <span class="value">{{ pretrainedStats.overall.accuracy | percent:'1.2-2' }}</span>
+          <span *ngIf="compare(pretrainedStats.overall.accuracy, customStats.overall.accuracy)" class="trend-up">▲</span>
+        </div>
+      </div>
+
+      <section class="stats-section">
+        <h3>Core Metrics</h3>
+        <div class="metrics-table-wrapper">
+          <table class="metrics-table">
+            <thead>
+              <tr>
+                <th>Emotion</th>
+                <th>F1-Score</th>
+                <th>Recall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of pretrainedStats.emotions">
+                <td>{{ item.emotion }}</td>
+                <td>{{ item.f1 | number:'1.2-2' }}</td>
+                <td>{{ item.recall | number:'1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="plots-section">
+        <h3>Visualizations</h3>
+        <div class="plot-card">
+          <label>Confusion Matrix</label>
+          <img [src]="getImgUrl(pretrainedStats.plots.confusion_matrix)" alt="Confusion Matrix">
+        </div>
+        <div class="plot-card">
+          <label>ROC Curve</label>
+          <img [src]="getImgUrl(pretrainedStats.plots.roc_curve)" alt="ROC Curve">
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
