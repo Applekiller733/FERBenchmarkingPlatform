@@ -88,3 +88,5 @@ logs
 
 # Angular CLI
 .angular/
+
+*.jpg
