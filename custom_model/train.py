@@ -12,6 +12,14 @@ def train_model(data_dir, num_epochs=15, batch_size=64, learning_rate=0.001, mod
     # Initialize model
     model = FERModel(num_classes=7).to(device)
     
+    full_model_path = os.path.join(os.path.dirname(__file__), model_path)
+    if os.path.exists(full_model_path):
+        print(f"Loading existing weights from {full_model_path}...")
+        # map_location ensures it loads correctly even if trained on GPU and running on CPU
+        model.load_state_dict(torch.load(full_model_path, map_location=device))
+    else:
+        print("No existing model found. Starting from scratch.")
+    
     # Loss and optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
