@@ -42,7 +42,6 @@ ENV/
 custom_model/data/
 custom_model/dummy_data/
 !custom_model/model.pth
-evaluation_scripts/results/
 
 # OS
 .DS_Store
