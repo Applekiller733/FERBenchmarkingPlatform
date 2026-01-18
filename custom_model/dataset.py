@@ -1,8 +1,22 @@
 from torchvision import transforms, datasets
 from torch.utils.data import DataLoader
 import os
+from typing import List, Optional
 
-def get_data_loaders(data_dir, batch_size=64):
+class CustomImageFolder(datasets.ImageFolder):
+    def __init__(self, root, transform=None, excluded_classes: Optional[List[str]] = None):
+        self.excluded_classes = set(excluded_classes) if excluded_classes else set()
+        super().__init__(root, transform=transform)
+
+    def find_classes(self, directory: str):
+        classes, class_to_idx = super().find_classes(directory)
+        if self.excluded_classes:
+            classes = [c for c in classes if c not in self.excluded_classes]
+            # Re-index classes to be continuous 0 to N-1
+            class_to_idx = {c: i for i, c in enumerate(classes)}
+        return classes, class_to_idx
+
+def get_data_loaders(data_dir, batch_size=64, excluded_classes=None):
     """
     Creates DataLoaders for train and test sets.
     Expects data_dir to contain 'train' and 'test' subdirectories.
@@ -14,6 +28,11 @@ def get_data_loaders(data_dir, batch_size=64):
         test/
             angry/
             ...
+    
+    Args:
+        data_dir (str): Path to data directory
+        batch_size (int): Batch size
+        excluded_classes (list): List of class names to exclude (e.g., ['disgust'])
     """
     
     # FER2013 images are 48x48 Grayscale
@@ -43,7 +62,10 @@ def get_data_loaders(data_dir, batch_size=64):
             # but user needs to fix this for training.
             return None, None
             
-        image_datasets[x] = datasets.ImageFolder(path, data_transforms[x])
-        dataloaders[x] = DataLoader(image_datasets[x], batch_size=batch_size, shuffle=(x == 'train'), num_workers=0) # num_workers=0 for Windows compatibility often helps
+        image_datasets[x] = CustomImageFolder(path, data_transforms[x], excluded_classes=excluded_classes)
+        # num_workers=4 allows parallel data loading, pin_memory=True speeds up transfer to GPU
+        # persistent_workers=True keeps workers alive between epochs (requires num_workers > 0)
+        dataloaders[x] = DataLoader(image_datasets[x], batch_size=batch_size, shuffle=(x == 'train'), 
+                                  num_workers=4, pin_memory=True, persistent_workers=True)
 
     return dataloaders['train'], dataloaders['test']
